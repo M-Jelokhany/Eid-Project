@@ -1,37 +1,53 @@
 import db.Database;
 import db.exception.InvalidEntityException;
-import example.Document;
-import example.Human;
-import java.util.Date;
+import todo.service.StepService;
+import todo.service.TaskService;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws InvalidEntityException {
-        Document doc = new Document("Eid Eid Eid");
+        Scanner scanner = new Scanner(System.in);
 
-        Database.add(doc);
+        boolean exit = false;
+        do {
+            System.out.println("Enter command (add task , add step , delete , update task , update step , get task-by-id , get all-tasks , get incomplete-tasks , exit) : ");
+            String command = scanner.nextLine();
 
-        System.out.println("Document added");
-
-        System.out.println("id: " + doc.id);
-        System.out.println("content: " + doc.content);
-        System.out.println("creation date: " + doc.getCreationDate());
-        System.out.println("last modification date: " + doc.getLastModificationDate());
-        System.out.println();
-
-        try {
-            Thread.sleep(30_000);
-        } catch (InterruptedException e) {
-            System.out.println("Sleep interrupted!");
-        }
-
-        doc.content = "This is the new content";
-
-        Database.update(doc);
-
-        System.out.println("Document updated");
-        System.out.println("id: " + doc.id);
-        System.out.println("content: " + doc.content);
-        System.out.println("creation date: " + doc.getCreationDate());
-        System.out.println("last modification date: " + doc.getLastModificationDate());
+            switch (command) {
+                case "exit":
+                    System.out.println("Exiting the program");
+                    exit = true;
+                    break;
+                case "add task":
+                    TaskService.addTask();
+                    break;
+                case "add step":
+                    StepService.addStep();
+                    break;
+                case "delete":
+                    Database.deleteEntity();
+                    break;
+                case "update task":
+                    TaskService.updateTask();
+                    break;
+                case "update step":
+                    StepService.updateStep();
+                    break;
+                case "get task-by-id":
+                    TaskService.getTaskById();
+                    break;
+                case "get all-tasks":
+                    TaskService.getAllTasks();
+                    break;
+                case "get incomplete-tasks":
+                    TaskService.getIncompleteTasks();
+                    break;
+                default:
+                    System.out.println();
+                    System.out.println("Command is Invalid . Please try again");
+                    System.out.println();
+                    break;
+            }
+        } while (!exit);
     }
 }

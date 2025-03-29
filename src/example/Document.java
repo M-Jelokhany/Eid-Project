@@ -11,8 +11,8 @@ public class Document extends Entity implements Trackable {
 
     public Document(String content){
         this.content = content;
-        creationDate = new Date();
-        lastModificationDate = new Date();
+        this.creationDate = new Date();
+        this.lastModificationDate = new Date();
     }
 
     @Override

@@ -1,9 +1,9 @@
 package db;
 import db.exception.EntityNotFoundException;
 import db.exception.InvalidEntityException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import todo.entity.Task;
+import todo.service.StepService;
+import java.util.*;
 
 public class Database {
     private static ArrayList<Entity> entities = new ArrayList<>();
@@ -42,8 +42,9 @@ public class Database {
         boolean notFound = true;
         for(Entity x : entities){
             if(x.id == id){
-                entities.remove(x);
                 notFound = false;
+                entities.remove(x);
+                break;
             }
         }
         if(notFound) {
@@ -66,6 +67,7 @@ public class Database {
             if(x.id == e.id){
                 entities.set(entities.indexOf(x) , e.copy());
                 notFound = false;
+                break;
             }
         }
 
@@ -82,4 +84,66 @@ public class Database {
         validators.put(entityCode , validator);
     }
 
+    public static ArrayList<Entity> getEntities(){
+        return entities;
+    }
+
+    public static ArrayList<Entity> getAll(int entityCode) {
+        ArrayList<Entity> entities = new ArrayList<>();
+        for(Entity x : Database.entities){
+            if(x.getEntityCode() == entityCode){
+                entities.add(x);
+            }
+        }
+
+        return entities;
+    }
+
+    public static boolean contain(int id){
+        boolean notFound = true ;
+        for(Entity x : entities){
+            if(x.id == id){
+                notFound = false;
+                break;
+            }
+        }
+
+        return !notFound;
+    }
+
+    public static void deleteEntity(){
+        Scanner scanner = new Scanner(System.in);
+        try{
+            System.out.println("ID : ");
+            int id = scanner.nextInt();
+            scanner.nextLine();
+            if(!(Database.contain(id))){
+                throw new EntityNotFoundException("Cannot delete entity with ID = " + id + "\n" + "Error : Cannot find entity with ID = " + id);
+            }
+            if(Database.get(id) instanceof Task){
+                StepService.deleteSteps(id);
+                Database.delete(id);
+                System.out.println();
+                System.out.println("Entity with ID = " + id + " successfully deleted");
+                System.out.println();
+            }
+            else{
+                Database.delete(id);
+                System.out.println();
+                System.out.println("Entity with ID = " + id + " successfully deleted");
+                System.out.println();
+            }
+        }catch (Exception e){
+            System.out.println();
+            if(e.getMessage() != null){
+                System.out.println(e.getMessage());
+            }
+            else{
+                System.out.println("Error : ID must be a number");
+            }
+            System.out.println();
+        }
+    }
 }
+
+
