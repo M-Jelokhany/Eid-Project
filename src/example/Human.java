@@ -13,8 +13,8 @@ public class Human extends Entity {
 
     @Override
     public Human copy() {
-        Human copyHuman = new Human(name,age);
-        copyHuman.id = id;
+        Human copyHuman = new Human(this.name , this.age);
+        copyHuman.id = this.id;
 
         return copyHuman;
     }
