@@ -10,23 +10,6 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class StepService {
-    public static void saveStep(int taskRef, String title) throws InvalidEntityException {
-        Step newStep = new Step(title , taskRef);
-        Database.add(newStep);
-    }
-
-    public static void setAsCompleted(int stepId) throws InvalidEntityException {
-        Step newStep = (Step) Database.get(stepId);
-        newStep.setStatus(Step.Status.Completed);
-        Database.update(newStep);
-    }
-
-    public static void setAsNotStarted(int stepId) throws InvalidEntityException {
-        Step newStep = (Step) Database.get(stepId);
-        newStep.setStatus(Step.Status.NotStarted);
-        Database.update(newStep);
-    }
-
     public static void addStep(){
         Scanner scanner = new Scanner(System.in);
         try{

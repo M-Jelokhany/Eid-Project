@@ -10,24 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TaskService {
-    public static void setAsCompleted(int taskId) throws InvalidEntityException {
-        Task newTask = (Task) Database.get(taskId);
-        newTask.setStatus(Task.Status.Completed);
-        Database.update(newTask);
-    }
-
-    public static void setAsInProgress(int taskId) throws InvalidEntityException {
-        Task newTask = (Task) Database.get(taskId);
-        newTask.setStatus(Task.Status.InProgress);
-        Database.update(newTask);
-    }
-
-    public static void setAsNotStarted(int taskId) throws InvalidEntityException {
-        Task newTask = (Task) Database.get(taskId);
-        newTask.setStatus(Task.Status.NotStarted);
-        Database.update(newTask);
-    }
-
     public static void addTask(){
         Scanner scanner = new Scanner(System.in);
         try{
